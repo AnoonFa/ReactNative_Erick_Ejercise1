@@ -1,10 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native';
 import React from 'react'
-import { Slot } from 'expo-router'
+import { Link } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
 
-const RootLayout = () => {
-  return <Slot/>
+export default function App() {
+  return (
+
+    <View className="flex-1 items-center justify-center bg-white">
+      <Text className="text-3xl" >Aor ADSO!</Text>
+      <StatusBar style='auto' />
+      <Link href="/profile" style={{color: 'blue'}}>Go to profile</Link>
+    </View>
+
+
+  )
+  
+
 }
-
-export default RootLayout
 

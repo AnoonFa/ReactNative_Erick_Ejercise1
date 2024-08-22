@@ -5,7 +5,9 @@ import { images} from '../../constants';
 import FormField from '../../components/FormField';
 import { useState } from 'react';
 import CustomButton from '../../components/CustomButton';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
+import { signIn } from '../../lib/appwrite';
+import { Alert } from 'react-native';
 
 const SingIn = () => {
   const [form, setForm] = useState({
@@ -16,11 +18,27 @@ const SingIn = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const submit = () => {
+  const submit = async() => {
+    if( !form.email || !form.password){
+      Alert.alert('Error', 'Please fill in all the fields')
+    }
+    setIsSubmitting(true);
 
+    try {
+       await signIn(form.email,form.password)
+
+        router.replace('/home')
+
+    } catch (error) {
+      Alert.alert('Error', error.message)
+      
+    }finally{
+      setIsSubmitting(false)
+    }
 
 
   }
+
 
 
   return (

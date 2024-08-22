@@ -1,11 +1,12 @@
-import { View, Text, Image, ScrollView } from 'react-native'
+import { View, Text, Image, ScrollView, Alert } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images} from '../../constants';
 import FormField from '../../components/FormField';
 import { useState } from 'react';
 import CustomButton from '../../components/CustomButton';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
+import { createUser } from '../../lib/appwrite';
 
 const SingUp = () => {
   const [form, setForm] = useState({
@@ -17,8 +18,24 @@ const SingUp = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const submit = () => {
+  const submit = async() => {
+    if(!form.username || !form.email || !form.password){
+      Alert.alert('Error', 'Please fill in all the fields')
+    }
+    setIsSubmitting(true);
 
+    try {
+      const result = await createUser(form.email,form.password, 
+        form.username)
+
+        router.replace('/home')
+
+    } catch (error) {
+      Alert.alert('Error', error.message)
+      
+    }finally{
+      setIsSubmitting(false)
+    }
 
 
   }
@@ -65,7 +82,7 @@ const SingUp = () => {
               
           />
           <CustomButton
-          title="Sing In"
+          title="Sing Up"
           handlePress={submit}
           containerStyles="mt-7"
           isLoading={isSubmitting}

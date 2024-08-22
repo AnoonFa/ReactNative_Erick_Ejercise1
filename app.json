@@ -14,7 +14,7 @@
     "scheme": "sora",
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
       "package":"co.edu.sena.aora"
     },
     "android": {

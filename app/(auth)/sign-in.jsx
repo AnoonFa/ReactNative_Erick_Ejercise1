@@ -83,7 +83,7 @@ const SingIn = () => {
             <Text className="text-lg text-gray-100 font-pregular">
               Don't have account?
             </Text>
-            <Link href="/sing-up" className="text-lg font-psemibold text-secondary">
+            <Link href="/sign-up" className="text-lg font-psemibold text-secondary">
             Sing Up
             </Link>
           </View>

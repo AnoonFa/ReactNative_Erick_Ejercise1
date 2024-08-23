@@ -6,38 +6,39 @@ import FormField from '../../components/FormField';
 import { useState } from 'react';
 import CustomButton from '../../components/CustomButton';
 import { Link, router } from 'expo-router';
-import { signIn } from '../../lib/appwrite';
+import { getCurrentUser, signIn } from '../../lib/appwrite';
 import { Alert } from 'react-native';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const SingIn = () => {
+  const { setUser, setIsLogged } = useGlobalContext();
+  const [isSubmitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
-    email:'',
-    password:''
+    email: "",
+    password: "",
+  });
 
-  })
-
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const submit = async() => {
-    if( !form.email || !form.password){
-      Alert.alert('Error', 'Please fill in all the fields')
+  const submit = async () => {
+    if (form.email === "" || form.password === "") {
+      Alert.alert("Error", "Please fill in all fields");
     }
-    setIsSubmitting(true);
+
+    setSubmitting(true);
 
     try {
-       await signIn(form.email,form.password)
+      await signIn(form.email, form.password);
+      const result = await getCurrentUser();
+      setUser(result);
+      setIsLogged(true);
 
-        router.replace('/home')
-
+      Alert.alert("Success", "User signed in successfully");
+      router.replace("/home");
     } catch (error) {
-      Alert.alert('Error', error.message)
-      
-    }finally{
-      setIsSubmitting(false)
+      Alert.alert("Error", error.message);
+    } finally {
+      setSubmitting(false);
     }
-
-
-  }
+  };
 
 
 

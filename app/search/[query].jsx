@@ -1,12 +1,16 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { View, Text } from 'react-native';
+import { useRouter, useRoute } from 'expo-router';
 
-const Seacrh = () => {
+const SearchScreen = () => {
+  const route = useRoute();
+  const { query } = route.params;
+
   return (
     <View>
-      <Text>Seacrh</Text>
+      <Text>Search Results for: {query}</Text>
     </View>
-  )
-}
+  );
+};
 
-export default Seacrh
+export default SearchScreen;

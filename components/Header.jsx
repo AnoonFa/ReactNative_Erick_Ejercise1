@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Image, SafeAreaView, View, Text, TouchableOpacity, StatusBar, Dimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Image, SafeAreaView, View, Text, TouchableOpacity, StatusBar, Dimensions, Alert } from 'react-native';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import { router } from 'expo-router';
 import DrawerMenu from './DrawerMenu'; // Importamos el componente del Drawer
+import { account, checkSession, getCurrentUser } from '@/lib/appwrite';  // Asegúrate de importar correctamente
 
 const { width } = Dimensions.get('window');
 
@@ -10,18 +11,66 @@ export default function Header() {
   const { isLoggedIn, setIsLoggedIn, setUser } = useGlobalContext();
   const [drawerVisible, setDrawerVisible] = useState(false);
 
-  const handleAuthAction = () => {
-    if (isLoggedIn) {
-      setIsLoggedIn(false);
-      setUser(null);
-      router.replace('/sign-in');
-    } else {
-      router.push('/sign-in');
-    }
-  };
+  // Comprobar si hay una sesión activa cuando el componente se monta
+  useEffect(() => {
+    const checkUserSession = async () => {
+      const sessionActive = await checkSession();
+      setIsLoggedIn(sessionActive);
+      if (sessionActive) {
+        const currentUser = await getCurrentUser();
+        setUser(currentUser); // Actualiza el usuario global
+      }
+    };
+    checkUserSession();
+  }, []);
+
+  // Función para manejar iniciar/cerrar sesión
+ 
+const handleAuthAction = async () => {
+  if (isLoggedIn) {
+    // Confirmar que el usuario quiere cerrar sesión
+    Alert.alert(
+      "Cerrar sesión",
+      "¿Estás seguro de que deseas cerrar sesión?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel"
+        },
+        {
+          text: "Cerrar sesión",
+          onPress: async () => {
+            try {
+              if (account) {  // Verifica que account esté inicializado
+                // Cerrar la sesión en el backend
+                await account.deleteSession('current');
+                // Actualizar estado del frontend
+                setIsLoggedIn(false);
+                setUser(null);
+                // Redirigir a la página de inicio de sesión
+                router.replace('/home');
+              } else {
+                throw new Error("La instancia de account no está disponible.");
+              }
+            } catch (error) {
+              console.error("Error al cerrar sesión:", error.message);
+              Alert.alert('Error', 'Hubo un problema al cerrar sesión. Intenta de nuevo.');
+            }
+          }
+        }
+      ]
+    );
+  } else {
+    router.push('/sign-in');  // Redirigir a la página de inicio de sesión
+  }
+};
 
   const navigateToHome = () => {
-    router.replace('/index');
+    router.replace('/home');
+  };
+
+  const navigateToPlans = () => {
+    router.push('/PlansPage');  // Redirige a la página PlansPage
   };
 
   const navigateToUnderConstruction = () => {
@@ -31,8 +80,7 @@ export default function Header() {
   return (
     <>
       {/* Barra de estado */}
-      <StatusBar backgroundColor='#000000' barStyle="ligth-content" />
-      
+      <StatusBar backgroundColor='#000000' barStyle="light-content" /> 
       <SafeAreaView style={{ backgroundColor: '#F2C94C', paddingTop: StatusBar.currentHeight }}>
         <View style={{ 
           height: 70,
@@ -69,7 +117,7 @@ export default function Header() {
             activeOpacity={0.7}
           >
             <Text style={{ color: '#000', fontWeight: '600', fontSize: width < 400 ? 12 : 14 }}>
-              {isLoggedIn ? 'Log Out' : 'Iniciar Sesión'}
+              {isLoggedIn ? 'Cerrar sesión' : 'Iniciar Sesión'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -79,6 +127,7 @@ export default function Header() {
       <DrawerMenu
         visible={drawerVisible}
         onClose={() => setDrawerVisible(false)}
+        navigateToPlans={navigateToPlans}
         navigateToUnderConstruction={navigateToUnderConstruction}
       />
     </>

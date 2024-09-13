@@ -38,58 +38,74 @@ const SignUp = () => {
   };
 
   return (
-    <SafeAreaView className="bg-primary h-full">
-      <ScrollView>
-        <View className="w-full justify-center min-h-[85vh] px-4 my-6">
-          <Image 
-            source={images.logo}
-            resizeMode='contain'
-            className="w-[115px] h-[35px]" 
-          />
-          
-          <Text className="text-2xl text-white text-semibold mt-10 font-psemibold">
-            Sign up to Aora Adso
+    <SafeAreaView className="bg-white h-full">
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View className="w-full justify-center items-center min-h-[85vh] px-4">
+
+          {/* Centered Image */}
+          <View className="w-full flex items-center justify-center ">
+            <Image 
+              source={images.david}
+              resizeMode='contain'
+              className="w-[180px] h-[180px] rounded-full border-2 border-secondary-100"
+            />
+          </View>
+
+          {/* Header Text */}
+          <Text className="text-3xl text-black font-psemibold text-center mb-8">
+            Registrate
           </Text>
 
+          {/* Username FormField */}
           <FormField 
-            title="Username"
+            title="Nombre de Usuario"
             value={form.username}
             handleChangeText={(e) => setForm({ ...form, username: e })}
-            otherStyles="mt-10"
-            inputStyle={{ color: 'white', backgroundColor: '#f0f0f0' }}
+            otherStyles="mt-4 w-full"
+            inputStyle={{ color: 'black', backgroundColor: '#f5f5f5', borderRadius: 10, padding: 12 }}
           />
           
+          {/* Email FormField */}
           <FormField 
-            title="Email"
+            title="Correo"
             value={form.email}
             handleChangeText={(e) => setForm({ ...form, email: e })}
-            otherStyles="mt-7"
+            otherStyles="mt-4 w-full"
             keyboardType="email-address"
-            inputStyle={{ color: 'white', backgroundColor: '#f0f0f0' }}
+            inputStyle={{ color: 'black', backgroundColor: '#f5f5f5', borderRadius: 10, padding: 12 }}
           />
           
+          {/* Password FormField */}
           <FormField 
-            title="Password"
+            title="Contraseña"
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
-            otherStyles="mt-7"
+            otherStyles="mt-4 w-full"
             secureTextEntry
-            inputStyle={{ color: 'white', backgroundColor: '#f0f0f0' }}
+            inputStyle={{ color: 'black', backgroundColor: '#f5f5f5', borderRadius: 10, padding: 12 }}
           />
           
+          {/* Sign Up Button */}
           <CustomButton 
-            title="Sign Up"
+            title="Iniciar sesión"
             handlePress={submit}
-            containerStyles="mt-7"
+            containerStyles="mt-8 w-full bg-secondary-100 py-4 rounded-full"
             isLoading={isSubmitting}
           />
 
+          {/* Sign In Link */}
           <View className="justify-center pt-5 flex-row gap-2">
-            <Text className="text-lg text-gray-100 font-pregular">
-              Have an account already?
+            <Text className="text-lg text-black-100 font-pregular">
+              ¿Ya tienes una cuenta?
             </Text>
-            <Link href="/sign-in" className="text-lg font-psemibold text-secondary">
-              Sign In
+            <Link href="/sign-in" className="text-lg font-psemibold text-secondary-100">
+              Inicia sesión
+            </Link>
+          </View>
+                              {/* Back Link at the bottom */}
+                              <View className="w-full flex items-center mt-8">
+            <Link href="/home" className="text-lg font-pregular text-gray-100 underline">
+              Volver
             </Link>
           </View>
         </View>

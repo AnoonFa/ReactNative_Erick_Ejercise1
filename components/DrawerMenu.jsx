@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
 
-export default function DrawerMenu({ visible, onClose, navigateToUnderConstruction }) {
+export default function DrawerMenu({ visible, onClose, navigateToPlans, navigateToUnderConstruction }) {
   return (
     <Modal
       animationType="slide"
@@ -29,7 +29,11 @@ export default function DrawerMenu({ visible, onClose, navigateToUnderConstructi
               key={index} 
               onPress={() => {
                 onClose();  // Cierra el drawer al seleccionar una opción
-                navigateToUnderConstruction('/UnderConstruction');  // Redirige a la página de "En construcción"
+                if (item === 'Planes') {
+                  navigateToPlans();  // Navega a PlansPage
+                } else {
+                  navigateToUnderConstruction();  // Navega a la página de UnderConstruction
+                }
               }} 
               style={{ marginVertical: 10, padding: 10, borderRadius: 5, backgroundColor: '#ffffff', borderTopColor: '#000000' }} 
               activeOpacity={0.7}

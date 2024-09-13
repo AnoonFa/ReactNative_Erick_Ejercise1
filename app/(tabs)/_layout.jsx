@@ -1,58 +1,49 @@
-import { View, Text, Image } from 'react-native'
-import {Tabs, Redirect} from 'expo-router'
-
-import {icons} from '../../constants'
-
-
-
+import { View, Text, Image } from 'react-native';
+import { Tabs } from 'expo-router';
 
 const TabsLayout = () => {
   return (
-    <Tabs 
+    <Tabs
       screenOptions={{ 
         tabBarShowLabel: false,
         tabBarActiveTintColor: '#FFA001',
-        tabBarInactiveTintColor: '#cdcde00',
-        tabBarStyle:{
-          
-          height:0,
+        tabBarInactiveTintColor: '#cdcde0',
+        tabBarStyle: {
+          height: 0,
         }
-        
-        }}>
+      }}>
+      
       <Tabs.Screen
-        name="home"  
+        name="home"
         options={{
           title: 'Home',
           headerShown: false,
-          
         }}
       />
+
       <Tabs.Screen
-        name="bookmark"  
-        options={{
-          title: 'Bookmark',
-          headerShown: false,
-          
-        }}
-      />
-      <Tabs.Screen
-        name="UnderConstruction"  
+        name="UnderConstruction"
         options={{
           title: 'UnderConstruction',
           headerShown: false,
-          
         }}
       />
       <Tabs.Screen
-        name="profile"  
+        name="PlansPage"  // Registering the new PlansPage screen
+        options={{
+          title: 'PlansPage',
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
         options={{
           title: 'Profile',
           headerShown: false,
-        
         }}
       />
     </Tabs>
-  )
-}
+  );
+};
 
-export default TabsLayout
+export default TabsLayout;

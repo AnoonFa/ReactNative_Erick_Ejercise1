@@ -8,17 +8,17 @@ const FormField = ({title, value,placeholder,handleChangeText,otherStyles, ...pr
 
   return (
     <View className={`space-y-2 ${otherStyles}`}>
-        <Text className="text-base text-gray-100 font-pmedium"
+        <Text className="text-base text-black-100 font-pmedium"
         >{title}</Text>
 
         <View className="border-2 border-black-200 w-full h-16 px-4 
-        bg-black-100 rounded-2xl focus:border-secondary items-center flex-row">
-            <TextInput className="flex-1 text-white font-psemibold
+        bg-white rounded-2xl focus:border-gray items-center flex-row">
+            <TextInput className="flex-1 text-black font-psemibold
                 text-base"
             value={value}
             onChangeText={handleChangeText}
             placeholder={placeholder}
-            placeholderTextColor={"#7b7b8b"}
+            placeholderTextColor={"#282879"}
             secureTextEntry={title === 'Password' && !showPassword}
             />
 
@@ -29,7 +29,6 @@ const FormField = ({title, value,placeholder,handleChangeText,otherStyles, ...pr
                         icons.eyehide} className="w-6 h-6"
                         resizeMode='contain'/>
                 </TouchableOpacity>
-                
             )}
         </View>
     </View>

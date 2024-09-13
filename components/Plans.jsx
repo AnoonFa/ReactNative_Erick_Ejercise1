@@ -39,7 +39,7 @@ export default function Plans() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Planes</Text>
+      <Text style={styles.headerText}>Elige tu plan y entrena ya</Text>
 
       {plans.map((plan, index) => (
         <View key={index} style={styles.planContainer}>
@@ -62,8 +62,8 @@ export default function Plans() {
               navigateToUnderConstruction(); // Navigate to UnderConstruction
             }}
           >
-            <Text style={styles.linkText}>Mostrar beneficios</Text>
-            <FontAwesome name="chevron-right" size={14} color="#000" />
+            <Text style={styles.linkText}>Mostrar beneficios </Text>
+            <FontAwesome name="chevron-right" size={10} color="#343434" />
           </TouchableOpacity>
         </View>
       ))}
@@ -77,10 +77,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   headerText: {
-    fontSize: 24,
+    fontSize: 27,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
+    marginTop: 5,
+    marginBottom: 5,
     color: '#000000',
   },
   planContainer: {
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   button: {
-    backgroundColor: '#f1c40f',
+    backgroundColor: '#0f8ff1',
     paddingVertical: 12,
     borderRadius: 25,
     alignItems: 'center',
@@ -130,8 +131,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   linkText: {
-    fontSize: 14,
-    color: '#3498db',
-    textDecorationLine: 'underline',
+    
+    fontSize: 16,
+    color: '#000000',
+    textDecorationLine: 'none',
   },
 });

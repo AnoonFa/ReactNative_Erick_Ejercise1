@@ -25,7 +25,7 @@ export default function Header() {
   };
 
   const navigateToUnderConstruction = () => {
-    router.push('/home');  // Redirige a la página en construcción
+    router.push('/UnderConstruction');  // Redirige a la página en construcción
   };
 
   return (

@@ -31,7 +31,7 @@ export default function DrawerMenu({ visible, onClose, navigateToUnderConstructi
                 onClose();  // Cierra el drawer al seleccionar una opción
                 navigateToUnderConstruction('/UnderConstruction');  // Redirige a la página de "En construcción"
               }} 
-              style={{ marginVertical: 10, padding: 10, borderRadius: 5, backgroundColor: '#F2C94C' }} 
+              style={{ marginVertical: 10, padding: 10, borderRadius: 5, backgroundColor: '#ffffff', borderTopColor: '#000000' }} 
               activeOpacity={0.7}
             >
               <Text style={{ color: '#000', fontWeight: '600' }}>

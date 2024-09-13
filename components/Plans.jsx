@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; // Asegúrate de instalar la librería si aún no lo has hecho
-import { useNavigation } from '@react-navigation/native'; // Importa el hook para navegación
+import { useRouter } from 'expo-router'; // Import router from expo-router
 
 export default function Plans() {
-  const navigation = useNavigation(); // Hook para navegación
+  const router = useRouter(); // Use router from expo-router
 
   const plans = [
     {
@@ -33,25 +33,35 @@ export default function Plans() {
     },
   ];
 
+  const navigateToUnderConstruction = () => {
+    router.push('/UnderConstruction'); // Navigate to the UnderConstruction page
+  };
+
   return (
     <View style={styles.container}>
-      {/* Agregamos el texto 'Planes' al inicio */}
       <Text style={styles.headerText}>Planes</Text>
 
       {plans.map((plan, index) => (
         <View key={index} style={styles.planContainer}>
           <Text style={styles.planTitle}>{plan.title}</Text>
           <Text style={styles.planDescription}>{plan.description}</Text>
-          
+
           <Text style={styles.planPriceLabel}>DESDE</Text>
           <Text style={styles.planPrice}>${plan.price}</Text>
-          
-          <TouchableOpacity style={styles.button} onPress={() => {/* Manejar la compra aquí */}}>
+
+          <TouchableOpacity style={styles.button}  onPress={() => {
+              navigateToUnderConstruction(); // Navigate to UnderConstruction
+            }}>
             <Text style={styles.buttonText}>{plan.buttonText}</Text>
           </TouchableOpacity>
 
-          {/* Redirigir a la página UnderConstruction al hacer clic en 'Mostrar beneficios' */}
-          <TouchableOpacity style={styles.linkContainer} onPress={() => navigation.navigate('underConstruction')}>
+          {/* Redirige a la página "UnderConstruction" al hacer clic en 'Mostrar beneficios' */}
+          <TouchableOpacity
+            style={styles.linkContainer}
+            onPress={() => {
+              navigateToUnderConstruction(); // Navigate to UnderConstruction
+            }}
+          >
             <Text style={styles.linkText}>Mostrar beneficios</Text>
             <FontAwesome name="chevron-right" size={14} color="#000" />
           </TouchableOpacity>
@@ -67,11 +77,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   headerText: {
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 10,
-    marginBottom: 5,
+    marginBottom: 20,
     color: '#000000',
   },
   planContainer: {

@@ -3,6 +3,7 @@ import { View, ScrollView } from 'react-native';
 import Carousel from '../../components/Carousel';
 import Header from '../../components/Header';
 import Plans from '../../components/Plans';
+import Footer from '../../components/Footer';
 import { StatusBar } from 'expo-status-bar';
 
 function Home() {
@@ -20,6 +21,7 @@ function Home() {
           {/* Aquí puedes agregar otros componentes como Google Maps */}
 
           <Plans />
+          <Footer />
         </ScrollView>
       </View>
     </>

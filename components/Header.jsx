@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Image, SafeAreaView, View, Text, TouchableOpacity, StatusBar, Dimensions, Alert } from 'react-native';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import { router } from 'expo-router';
-import DrawerMenu from './DrawerMenu'; // Importamos el componente del Drawer
+import DrawerMenu from './DrawerMenu';  // Importamos el componente del Drawer
 import { account, checkSession, getCurrentUser } from '@/lib/appwrite';  // Asegúrate de importar correctamente
 
 const { width } = Dimensions.get('window');
@@ -14,56 +14,62 @@ export default function Header() {
   // Comprobar si hay una sesión activa cuando el componente se monta
   useEffect(() => {
     const checkUserSession = async () => {
-      const sessionActive = await checkSession();
-      setIsLoggedIn(sessionActive);
-      if (sessionActive) {
-        const currentUser = await getCurrentUser();
-        setUser(currentUser); // Actualiza el usuario global
+      try {
+        const sessionActive = await checkSession();
+        console.log('Session active:', sessionActive); // Verifica si la sesión está activa
+        setIsLoggedIn(sessionActive);
+        if (sessionActive) {
+          const currentUser = await getCurrentUser();
+          console.log('Current User:', currentUser);  // Imprime el usuario actual
+          setUser(currentUser);  // Actualiza el usuario global
+        }
+      } catch (error) {
+        console.error('Error checking session:', error);
       }
     };
     checkUserSession();
-  }, []);
+  }, [isLoggedIn]);  // Esto permite que el efecto se ejecute cada vez que cambie el estado de la sesión
 
   // Función para manejar iniciar/cerrar sesión
- 
-const handleAuthAction = async () => {
-  if (isLoggedIn) {
-    // Confirmar que el usuario quiere cerrar sesión
-    Alert.alert(
-      "Cerrar sesión",
-      "¿Estás seguro de que deseas cerrar sesión?",
-      [
-        {
-          text: "Cancelar",
-          style: "cancel"
-        },
-        {
-          text: "Cerrar sesión",
-          onPress: async () => {
-            try {
-              if (account) {  // Verifica que account esté inicializado
-                // Cerrar la sesión en el backend
-                await account.deleteSession('current');
-                // Actualizar estado del frontend
-                setIsLoggedIn(false);
-                setUser(null);
-                // Redirigir a la página de inicio de sesión
-                router.replace('/home');
-              } else {
-                throw new Error("La instancia de account no está disponible.");
+  const handleAuthAction = async () => {
+    if (isLoggedIn) {
+      // Confirmar que el usuario quiere cerrar sesión
+      Alert.alert(
+        "Cerrar sesión",
+        "¿Estás seguro de que deseas cerrar sesión?",
+        [
+          {
+            text: "Cancelar",
+            style: "cancel"
+          },
+          {
+            text: "Cerrar sesión",
+            onPress: async () => {
+              try {
+                if (account) {  // Verifica que account esté inicializado
+                  // Cerrar la sesión en el backend
+                  await account.deleteSession('current');
+                  console.log("Sesión cerrada correctamente");
+                  // Actualizar estado del frontend
+                  setIsLoggedIn(false);
+                  setUser(null);
+                  // Redirigir a la página de inicio de sesión
+                  router.replace('/home');
+                } else {
+                  throw new Error("La instancia de account no está disponible.");
+                }
+              } catch (error) {
+                console.error("Error al cerrar sesión:", error.message);
+                Alert.alert('Error', 'Hubo un problema al cerrar sesión. Intenta de nuevo.');
               }
-            } catch (error) {
-              console.error("Error al cerrar sesión:", error.message);
-              Alert.alert('Error', 'Hubo un problema al cerrar sesión. Intenta de nuevo.');
             }
           }
-        }
-      ]
-    );
-  } else {
-    router.push('/sign-in');  // Redirigir a la página de inicio de sesión
-  }
-};
+        ]
+      );
+    } else {
+      router.push('/sign-in');  // Redirigir a la página de inicio de sesión
+    }
+  };
 
   const navigateToHome = () => {
     router.replace('/home');
@@ -94,8 +100,8 @@ const handleAuthAction = async () => {
             {/* Menú hamburguesa */}
             <TouchableOpacity onPress={() => setDrawerVisible(true)} style={{ paddingRight: 8 }}>
               <Image 
-                source={require('../assets/icon/menu.png')} // Asegúrate de que la ruta a la imagen sea correcta
-                style={{ width: 30, height: 30 }} // Ajusta el tamaño según sea necesario
+                source={require('../assets/icon/menu.png')}  // Asegúrate de que la ruta a la imagen sea correcta
+                style={{ width: 30, height: 30 }}  // Ajusta el tamaño según sea necesario
                 resizeMode="contain"
               />
             </TouchableOpacity>

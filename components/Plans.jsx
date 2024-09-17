@@ -107,7 +107,7 @@ export default function Plans() {
               </Text>
               <Text style={styles.modalText}>Lunes a Viernes: 6:00 AM - 10:00 PM</Text>
               <Text style={styles.modalText}>Sábado: 8:00 AM - 4:00 PM</Text>
-              <Text style={styles.modalText}>Domingo: Cerrado</Text>
+              <Text style={styles.modalText}>Domingo: 6:00 AM - 12:00PM</Text>
 
               <TouchableOpacity
                 style={styles.closeButton}

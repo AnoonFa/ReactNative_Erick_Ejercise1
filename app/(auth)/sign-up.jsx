@@ -87,7 +87,7 @@ const SignUp = () => {
           
           {/* Sign Up Button */}
           <CustomButton 
-            title="Iniciar sesión"
+            title="Registrate"
             handlePress={submit}
             containerStyles="mt-8 w-full bg-secondary-100 py-4 rounded-full"
             isLoading={isSubmitting}
